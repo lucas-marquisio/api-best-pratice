@@ -1,23 +1,7 @@
 import { expect, test } from 'bun:test'
+import { Clock, PointService } from './point-service'
 
-interface Clock {
-  getTime(): Date
-}
-class PointService {
-  constructor (private readonly clock: Clock) {}
 
-  async checkin (userId: string) {
-    const checkinTime = this.clock.getTime()
-    const checkinHour = new Date(checkinTime).getHours()
-
-    if (checkinHour < 8) throw new Error('Error, try again after 8 AM.')
-
-    return {
-      id: userId,
-      checkin: this.clock.getTime()
-    }
-  }
-}
 
 class FakeClock implements Clock {
   private time: Date = new Date()
