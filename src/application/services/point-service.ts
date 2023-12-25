@@ -1,11 +1,13 @@
 import { Clock } from '../../domain/point/clock'
+import { Point } from '../../domain/point/point'
+import { PointModel } from '../../domain/point/point-model'
 
-export class PointService {
+export class PointService implements Point{
   private overtime: boolean = false
 
   constructor (private readonly clock: Clock) {}
 
-  async checkin (userId: string) {
+  async checkin (userId: string): Promise<PointModel> {
     const checkinTime = this.clock.getTime()
     const checkinHour = new Date(checkinTime).getHours()
 
@@ -21,7 +23,7 @@ export class PointService {
     return proof
   }
 
-  async checkout (proof: any) {
+  async checkout (proof: PointModel): Promise<PointModel> {
     const checkoutTime = this.clock.getTime()
 
     const exceedLimitHours =
