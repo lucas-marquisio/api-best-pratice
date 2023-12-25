@@ -72,7 +72,7 @@ test('Should checkout and recieve a proof correct', async () => {
   fakeClock.setTime(new Date('2023-12-25:08:00:00'))
   const proofCheckin = await pointService.checkin('1234')
   fakeClock.setTime(new Date('2023-12-25:12:00:00'))
-  const proofCheckout = await pointService.checkout('1234')
+  const proofCheckout = await pointService.checkout(proofCheckin)
 
   expect(proofCheckin.id).toEqual(proofCheckout.id)
 })
@@ -84,7 +84,7 @@ test('Should return an error if it exceeds 4 hours of work', async () => {
   const proofCheckin = await pointService.checkin('1234')
   fakeClock.setTime(new Date('2023-12-25:13:00:00'))
 
-  expect(async () => await pointService.checkout('1234')).toThrow(
+  expect(async () => await pointService.checkout(proofCheckin)).toThrow(
     new Error('exceeds limit 4 hours')
   )
 })
@@ -96,7 +96,7 @@ test('Should accept overtime if overtime is enabled', async () => {
   fakeClock.setTime(new Date('2023-12-25:08:00:00'))
   const proofCheckin = await pointService.checkin('1234')
   fakeClock.setTime(new Date('2023-12-25:17:00:00'))
-  const proofCheckout = await pointService.checkout('1234')
+  const proofCheckout = await pointService.checkout(proofCheckin)
 
   expect(proofCheckin).toBeTruthy()
 })
