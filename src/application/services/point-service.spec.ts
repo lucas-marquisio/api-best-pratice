@@ -69,8 +69,20 @@ test('Should checkout and recieve a proof correct', async () => {
   const pointService = new PointService(fakeClock, new FakePointRepository())
   fakeClock.setTime(new Date('2023-12-25:08:00:00'))
   const proofCheckin = await pointService.checkin('1234')
-  fakeClock.setTime(new Date('2023-12-25:14:00:00'))
+  fakeClock.setTime(new Date('2023-12-25:12:00:00'))
   const proofCheckout = await pointService.checkout('1234')
 
   expect(proofCheckin.id).toEqual(proofCheckout.id)
+})
+
+test('Should return an error if it exceeds 4 hours of work', async () => {
+  const fakeClock = new FakeClock()
+  const pointService = new PointService(fakeClock, new FakePointRepository())
+  fakeClock.setTime(new Date('2023-12-25:08:00:00'))
+  const proofCheckin = await pointService.checkin('1234')
+  fakeClock.setTime(new Date('2023-12-25:13:00:00'))
+
+  expect(async () => await pointService.checkout('1234')).toThrow(
+    new Error('exceeds limit 4 hours')
+  )
 })

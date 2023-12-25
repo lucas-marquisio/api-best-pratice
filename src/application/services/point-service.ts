@@ -34,9 +34,14 @@ export class PointService {
 
   async checkout (userId: string) {
     const proof = await this.pointRepository.findLast(userId)
+    const checkoutTime = this.clock.getTime()
 
-    proof.checkout = this.clock.getTime()
+    const exceedLimitHours =
+      checkoutTime.getHours() - proof.checkin.getHours() > 4 ? true : false
 
+    if (exceedLimitHours) throw new Error('exceeds limit 4 hours')
+
+    proof.checkout = checkoutTime
     await this.pointRepository.update(proof)
 
     return proof
