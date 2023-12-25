@@ -18,4 +18,4 @@ Simples API, por exemplo, separando as regras de negócio em camadas de domínio
 
 **Database**: In this example, I used an in-memory database. If you want to use a real database, simply make the change in the implementation in a straightforward and easy manner, and everything will work.
 
-[Documentation]('https://github.com/lucas-marquisio/api-best-pratice/blob/main/documentation.md')
+<a href='https://github.com/lucas-marquisio/api-best-pratice/blob/main/documentation.md'>Documentation</a>
