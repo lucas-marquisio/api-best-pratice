@@ -1,6 +1,7 @@
 import { expect, test } from 'bun:test'
 import { Clock } from '../../domain/point/clock'
 import { PointRepository } from '../repository/point-repository'
+import { PointService } from '../services/point-service'
 import { PointCheckinController } from './point-controller'
 
 class FakeClock implements Clock {
@@ -23,8 +24,8 @@ class FakePointRepository implements PointRepository {
 
 test('sould return 400 if id not provided', async () => {
   const controller = new PointCheckinController(
-    new FakeClock(),
-    new FakePointRepository()
+    new FakePointRepository(),
+    new PointService(new FakeClock())
   )
   const output = await controller.execute({
     body: {}
@@ -35,9 +36,10 @@ test('sould return 400 if id not provided', async () => {
 
 test('sould return 200 if send correct data', async () => {
   const controller = new PointCheckinController(
-    new FakeClock(),
-    new FakePointRepository()
+    new FakePointRepository(),
+    new PointService(new FakeClock())
   )
+
   const output = await controller.execute({
     body: {
       id: '1234'

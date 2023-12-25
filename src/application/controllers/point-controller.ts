@@ -1,11 +1,10 @@
-import { Clock } from '../../domain/point/clock'
+import { Point } from '../../domain/point/point'
 import { Controller } from '../protocos/controller'
 import { PointRepository } from '../repository/point-repository'
-import { PointService } from '../services/point-service'
 export class PointCheckinController implements Controller {
   constructor (
-    private readonly clock: Clock,
-    private readonly pointRepository: PointRepository
+    private readonly pointRepository: PointRepository,
+    private readonly pointService: Point
   ) {}
 
   async execute (httpRequest: any): Promise<any> {
@@ -17,8 +16,7 @@ export class PointCheckinController implements Controller {
         body: {}
       }
 
-    const pointService = new PointService(this.clock)
-    const proof = pointService.checkin(userId)
+    const proof = this.pointService.checkin(userId)
 
     await this.pointRepository.save(proof)
 
