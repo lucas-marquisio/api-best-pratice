@@ -1,5 +1,7 @@
 import { expect, test } from 'bun:test'
-import { Clock, PointRepository, PointService } from './point-service'
+import { Clock } from '../../domain/point/clock'
+import { PointRepository } from '../repository/point-repository'
+import { PointService } from './point-service'
 
 class FakeClock implements Clock {
   private time: Date = new Date()

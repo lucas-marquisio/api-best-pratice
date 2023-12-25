@@ -1,12 +1,5 @@
-export interface Clock {
-  getTime(): Date
-}
-
-export interface PointRepository {
-  save(point: any): Promise<void>
-  findLast(userid: string): Promise<any>
-  update(point: any): Promise<void>
-}
+import { Clock } from '../../domain/point/clock'
+import { PointRepository } from '../repository/point-repository'
 
 export class PointService {
   private overtime: boolean = false
