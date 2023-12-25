@@ -2,6 +2,10 @@
   "name": "api-best-pratice",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "start": "bun src/main.ts",
+    "test": "bun --watch test"
+  },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "bun-types": "latest"
