@@ -1,4 +1,4 @@
-# Simple Api
+# Simple API for checking in and out to mark the start and stop of a job
 
 _API created using best practices, namely TDD and SOLID._
 
