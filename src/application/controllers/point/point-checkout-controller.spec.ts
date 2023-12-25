@@ -1,4 +1,4 @@
-import { expect, test } from 'bun:test'
+import { describe, expect, test } from 'bun:test'
 import { Clock } from '../../../domain/point/clock'
 import { PointRepository } from '../../repository/point-repository'
 import { PointService } from '../../services/point-service'
@@ -27,30 +27,31 @@ class FakePointRepository implements PointRepository {
   async update (point: any): Promise<void> {}
 }
 
-test('sould return 400 if id not provided', async () => {
-  const controller = new PointCheckoutController(
-    new FakePointRepository(),
-    new PointService(new FakeClock())
-  )
-  const output = await controller.execute({
-    body: {}
+describe('PointCheckoutController', () => {
+  test('sould return 400 if id not provided', async () => {
+    const controller = new PointCheckoutController(
+      new FakePointRepository(),
+      new PointService(new FakeClock())
+    )
+    const output = await controller.execute({
+      body: {}
+    })
+
+    expect(output.statusCode).toEqual(400)
   })
 
-  expect(output.statusCode).toEqual(400)
-})
+  test('sould return 200 if send correct data', async () => {
+    const controller = new PointCheckoutController(
+      new FakePointRepository(),
+      new PointService(new FakeClock())
+    )
 
-test('sould return 200 if send correct data', async () => {
-  const controller = new PointCheckoutController(
-    new FakePointRepository(),
-    new PointService(new FakeClock())
-  )
+    const output = await controller.execute({
+      body: {
+        id: '1234'
+      }
+    })
 
-  const output = await controller.execute({
-    body: {
-      id: '1234'
-    }
+    expect(output.statusCode).toEqual(200)
   })
-
-  console.log(output)
-  expect(output.statusCode).toEqual(200)
 })

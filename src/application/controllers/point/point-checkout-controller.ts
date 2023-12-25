@@ -16,7 +16,6 @@ export class PointCheckoutController implements Controller {
       if (!userId) return badRequest(new MissingParamError('id'))
 
       const proof = await this.pointRepository.findLast(userId)
-      console.log(proof)
       const proofCheckout = await this.pointService.checkout(proof)
 
       return Ok(proofCheckout)
