@@ -1,9 +1,8 @@
 # Simple Api 
 
-_API created using best practices, namely TDD, DDD, and SOLID._
+_API created using best practices, namely TDD and SOLID._
 
 - TDD (Test-Driven Development)
-- DDD (Domain Driven Design)
 - SOLID
 
 
