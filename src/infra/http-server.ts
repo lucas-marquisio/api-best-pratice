@@ -1,5 +1,5 @@
 import express, { Express, Request, Response } from 'express'
-import { Controller } from '../application/protocos/controller'
+import { Controller } from '../application/protocols/controller'
 
 export class HttpServer {
   private server: Express

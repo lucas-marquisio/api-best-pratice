@@ -1,7 +1,7 @@
 import { Point } from '../../../domain/point/point'
-import { Controller } from '../../protocos/controller'
-import { MissingParamError } from '../../protocos/errros/missing-param-error'
-import { Ok, badRequest, internalError } from '../../protocos/http-responses'
+import { Controller } from '../../protocols/controller'
+import { MissingParamError } from '../../protocols/errros/missing-param-error'
+import { Ok, badRequest, internalError } from '../../protocols/http-responses'
 import { PointRepository } from '../../repository/point-repository'
 
 export class PointCheckoutController implements Controller {
