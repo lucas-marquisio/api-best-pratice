@@ -1,11 +1,8 @@
 import { expect, test } from 'bun:test'
 import { Clock } from '../../../domain/point/clock'
-import { Point } from '../../../domain/point/point'
-import { Controller } from '../../protocos/controller'
-import { MissingParamError } from '../../protocos/errros/missing-param-error'
-import { Ok, badRequest, internalError } from '../../protocos/http-responses'
 import { PointRepository } from '../../repository/point-repository'
 import { PointService } from '../../services/point-service'
+import { PointCheckoutController } from './point-checkout-controller'
 
 class FakeClock implements Clock {
   private time: Date = new Date()
@@ -28,28 +25,6 @@ class FakePointRepository implements PointRepository {
   }
   async save (point: any): Promise<void> {}
   async update (point: any): Promise<void> {}
-}
-
-class PointCheckoutController implements Controller {
-  constructor (
-    private readonly pointRepository: PointRepository,
-    private readonly pointService: Point
-  ) {}
-
-  async execute (httpRequest: any): Promise<any> {
-    try {
-      const userId = httpRequest.body.id
-      if (!userId) return badRequest(new MissingParamError('id'))
-
-      const proof = await this.pointRepository.findLast(userId)
-
-      const proofCheckout = await this.pointService.checkout(proof)
-
-      return Ok(proofCheckout)
-    } catch (error) {
-      return internalError()
-    }
-  }
 }
 
 test('sould return 400 if id not provided', async () => {
