@@ -21,7 +21,7 @@ class FakePointRepository implements PointRepository {
   async update (point: any): Promise<void> {}
 }
 
-test('sould return 400 if userId not provided', async () => {
+test('sould return 400 if id not provided', async () => {
   const controller = new PointCheckinController(
     new FakeClock(),
     new FakePointRepository()
@@ -31,4 +31,18 @@ test('sould return 400 if userId not provided', async () => {
   })
 
   expect(output.statusCode).toEqual(400)
+})
+
+test('sould return 200 if send correct data', async () => {
+  const controller = new PointCheckinController(
+    new FakeClock(),
+    new FakePointRepository()
+  )
+  const output = await controller.execute({
+    body: {
+      id: '1234'
+    }
+  })
+
+  expect(output.statusCode).toEqual(200)
 })

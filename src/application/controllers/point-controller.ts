@@ -1,7 +1,7 @@
 import { Clock } from '../../domain/point/clock'
 import { Controller } from '../protocos/controller'
 import { PointRepository } from '../repository/point-repository'
-
+import { PointService } from '../services/point-service'
 export class PointCheckinController implements Controller {
   constructor (
     private readonly clock: Clock,
@@ -16,5 +16,15 @@ export class PointCheckinController implements Controller {
         statusCode: 400,
         body: {}
       }
+
+    const pointService = new PointService(this.clock)
+    const proof = pointService.checkin(userId)
+
+    await this.pointRepository.save(proof)
+
+    return {
+      statusCode: 200,
+      body: proof
+    }
   }
 }
