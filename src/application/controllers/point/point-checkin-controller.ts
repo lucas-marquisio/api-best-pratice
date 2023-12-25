@@ -15,8 +15,8 @@ export class PointCheckinController implements Controller {
 
       if (!userId) return badRequest(new MissingParamError('id'))
 
-      const proof = this.pointService.checkin(userId)
-
+      const proof = await this.pointService.checkin(userId)
+      
       await this.pointRepository.save(proof)
 
       return Ok(proof)
