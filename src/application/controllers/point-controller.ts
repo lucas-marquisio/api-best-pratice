@@ -1,5 +1,6 @@
 import { Point } from '../../domain/point/point'
 import { Controller } from '../protocos/controller'
+import { Ok, badRequest } from '../protocos/http-responses'
 import { PointRepository } from '../repository/point-repository'
 export class PointCheckinController implements Controller {
   constructor (
@@ -10,19 +11,12 @@ export class PointCheckinController implements Controller {
   async execute (httpRequest: any): Promise<any> {
     const userId: string = httpRequest.body.id
 
-    if (!userId)
-      return {
-        statusCode: 400,
-        body: {}
-      }
+    if (!userId) return badRequest(new Error('missing param error: id'))
 
     const proof = this.pointService.checkin(userId)
 
     await this.pointRepository.save(proof)
 
-    return {
-      statusCode: 200,
-      body: proof
-    }
+    return Ok(proof)
   }
 }
