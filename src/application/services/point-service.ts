@@ -1,13 +1,9 @@
 import { Clock } from '../../domain/point/clock'
-import { PointRepository } from '../repository/point-repository'
 
 export class PointService {
   private overtime: boolean = false
 
-  constructor (
-    private readonly clock: Clock,
-    private readonly pointRepository: PointRepository
-  ) {}
+  constructor (private readonly clock: Clock) {}
 
   async checkin (userId: string) {
     const checkinTime = this.clock.getTime()
