@@ -86,3 +86,15 @@ test('Should return an error if it exceeds 4 hours of work', async () => {
     new Error('exceeds limit 4 hours')
   )
 })
+
+test('Should accept overtime if overtime is enabled', async () => {
+  const fakeClock = new FakeClock()
+  const pointService = new PointService(fakeClock, new FakePointRepository())
+  pointService.enableOvertime()
+  fakeClock.setTime(new Date('2023-12-25:08:00:00'))
+  const proofCheckin = await pointService.checkin('1234')
+  fakeClock.setTime(new Date('2023-12-25:17:00:00'))
+  const proofCheckout = await pointService.checkout('1234')
+
+  expect(proofCheckin).toBeTruthy()
+})

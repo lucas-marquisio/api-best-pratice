@@ -9,6 +9,8 @@ export interface PointRepository {
 }
 
 export class PointService {
+  private overtime: boolean = false
+
   constructor (
     private readonly clock: Clock,
     private readonly pointRepository: PointRepository
@@ -39,11 +41,16 @@ export class PointService {
     const exceedLimitHours =
       checkoutTime.getHours() - proof.checkin.getHours() > 4 ? true : false
 
-    if (exceedLimitHours) throw new Error('exceeds limit 4 hours')
+    if (exceedLimitHours && !this.overtime)
+      throw new Error('exceeds limit 4 hours')
 
     proof.checkout = checkoutTime
     await this.pointRepository.update(proof)
 
     return proof
+  }
+
+  enableOvertime () {
+    this.overtime = true
   }
 }
